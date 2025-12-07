@@ -1,0 +1,13 @@
+const erc20Abi = [
+  "function balanceOf(address) view returns (uint256)",
+  "function transfer(address to, uint amount) returns (bool)"
+];
+
+async function sendErc20(signer, tokenAddress, to, amountHuman, decimals = 18) {
+  const token = new ethers.Contract(tokenAddress, erc20Abi, signer);
+  const amount = ethers.utils.parseUnits(amountHuman.toString(), decimals);
+  const tx = await token.transfer(to, amount);
+  console.log('ERC20 tx hash:', tx.hash);
+  await tx.wait();
+  console.log('Transfer confirmed');
+}
