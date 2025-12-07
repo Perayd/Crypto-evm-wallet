@@ -1,0 +1,14 @@
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+<script>
+async function createWallet() {
+  const wallet = ethers.Wallet.createRandom();
+  console.log('Mnemonic:', wallet.mnemonic.phrase);
+  console.log('Address:', wallet.address);
+  // To connect to an RPC:
+  const provider = new ethers.providers.JsonRpcProvider('https://mainnet.base.org', 8453);
+  const signer = wallet.connect(provider);
+  const balance = await provider.getBalance(wallet.address);
+  console.log('Balance (wei):', balance.toString());
+}
+createWallet();
+</script>
